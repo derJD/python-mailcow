@@ -1,0 +1,42 @@
+---
+
+image: ${CI_REGISTRY}/docker/python-build:latest
+
+variables:
+  TWINE_USERNAME: $CI_REGISTRY_USER
+  TWINE_PASSWORD: $CI_JOB_TOKEN
+  TWINE_REPOSITORY_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi
+
+stages:
+  - build
+  - release
+  - publish
+
+build:
+  stage: build
+  script:
+    - python setup.py sdist bdist_wheel
+
+  artifacts:
+    paths: ['dist/*']
+
+release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script: ['echo running release']
+
+  release:
+    name: 'Release $CI_COMMIT_TAG'
+    description: ./CHANGELOG.md
+    tag_name: '$CI_COMMIT_TAG'
+    ref: '$CI_COMMIT_TAG'
+
+publish:
+  stage: publish
+  rules:
+    - if: $CI_COMMIT_TAG
+
+  script:
+    - python3 -m twine upload dist/*
