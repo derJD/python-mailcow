@@ -27,6 +27,8 @@ test:pylint:
         --value=${SCORE}
         --file ${CI_JOB_NAME##*:}.svg
         4=red 6=orange 8=yellow 10=green
+    - pylint --exit-zero -f colorized src/
+
   artifacts:
     paths: ['*.svg']
     reports:
