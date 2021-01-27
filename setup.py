@@ -4,7 +4,7 @@ from os import getenv
 from setuptools import setup, find_packages
 
 
-def get_version(version="9999.999.99-dev9"):
+def get_version(version="9999.999.99.dev9"):
     for env in ["CI_COMMIT_TAG", "VERSION"]:
         version = getenv(env, version)
 

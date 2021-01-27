@@ -20,7 +20,7 @@ BTW: The look and feel of the cli and configuration is inspired by the [python-g
 
 * `git checkout main`
 * `python setup.py sdist`
-* `pip install dist/python-mailcow-9999.999.99-dev9.tar.gz`
+* `pip install dist/python-mailcow-9999.999.99.dev9.tar.gz`
 
 ## Usage
 
