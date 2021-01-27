@@ -8,9 +8,29 @@ variables:
   TWINE_REPOSITORY_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi
 
 stages:
+  - test
   - build
   - release
   - publish
+
+test:pylint:
+  stage: test
+  script:
+    - SCORE=$(
+        pylint --exit-zero -f parseable src/ |
+          awk '/Your code has been rated at/ {gsub("/.*","", $7); print $7}'
+      )
+    - pylint --exit-zero -f pylint_gitlab.GitlabCodeClimateReporter src/ > codequality.json
+    - anybadge 
+        --overwrite
+        --label ${CI_JOB_NAME##*:}
+        --value=${SCORE}
+        --file ${CI_JOB_NAME##*:}.svg
+        4=red 6=orange 8=yellow 10=green
+  artifacts:
+    paths: ['*.svg']
+    reports:
+      codequality: codequality.json
 
 build:
   stage: build
