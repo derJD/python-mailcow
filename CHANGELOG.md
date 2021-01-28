@@ -1,5 +1,14 @@
 # Changelog
 
+## Version 1.0.1
+
+* Add Makefile
+* Add CI job for linting
+* Add pylint badge to README
+* Update upload command in publish ci job
+* Fix url in setup.py
+* Fix dev-version string
+
 ## Version 1.0.0
 
 ### Features
