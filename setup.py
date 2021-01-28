@@ -22,7 +22,7 @@ setup(
     description="Interact with mailcow API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com./derJD/python-mailcow",
+    url="https://github.com/derJD/python-mailcow",
     license="GPLv3+",
     package_dir={"": "src"},
     packages=find_packages("src/"),
