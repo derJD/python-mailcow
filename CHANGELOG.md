@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://gitlab.der-jd.de/python/mailcow/compare/1.0.1...1.0.2) (2021-02-03)
+
+
+### Bug Fixes
+
+* **cli:** Remove obsolete custom argument ([1dc3b39](https://gitlab.der-jd.de/python/mailcow/commit/1dc3b39d9449c7775c3c00c9bca736328eb4a798)), closes [#3956](https://gitlab.der-jd.de/python/mailcow/issues/3956)
+
 ## Version 1.0.1
 
 * Add Makefile
