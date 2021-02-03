@@ -29,12 +29,6 @@ def main():
     for section, modifiers in moo.endpoints.items():
         if 'get' in modifiers:
             moo.endpoints[section]['get'].update(FIELDS)
-        # add `--sogo_visible` since it is missing in OpenApi
-        if section == 'alias':
-            for modifier in ['edit', 'add']:
-                moo.endpoints[section][modifier].update({'sogo_visible': {
-                    'description': 'toggle visibility in SoGo',
-                    'type': 'boolean'}})
     args = menu(moo.endpoints)
     args_as_dict = vars(args)
 
