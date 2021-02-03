@@ -1,64 +1,37 @@
 ---
 
-image: ${CI_REGISTRY}/docker/python-build:latest
+# Workflow of the included templates:
+#
+# 1) Unless pipeline is triggered by a tag, this project will be linted
+#    with pylint and a pylint-score-badge is generated.
+#
+# 2) This pipeline will always build this project and store it as artifact.
+#
+# 3) Unless triggered via tag, a semantic release will be generated.
+#    If current branch is not main aka a protected branch,
+#    semantc-release does only a dry-run.
+#
+# 4) If triggered via tag, build will be released with twine
+#
+# Templates/Includes located and documented here:
+#   https://gitlab.der-jd.de/gitlab/ci-templates
+#
 
-variables:
-  TWINE_USERNAME: $CI_REGISTRY_USER
-  TWINE_PASSWORD: $CI_JOB_TOKEN
-  TWINE_REPOSITORY_URL: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi
+include:
+  - { project: gitlab/ci-templates, file: lint/python.yml }
+  - { project: gitlab/ci-templates, file: build/python.yml }
+  - { project: gitlab/ci-templates, file: release/semantic.yml }
+  - { project: gitlab/ci-templates, file: release/python.yml }
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "api"
+    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_PIPELINE_SOURCE == "webide"
+    - if: $CI_PIPELINE_SOURCE == "web"
 
 stages:
-  - test
+  - lint
   - build
   - release
-  - publish
-
-test:pylint:
-  stage: test
-  script:
-    - SCORE=$(
-        pylint --exit-zero -f parseable src/ |
-          awk '/Your code has been rated at/ {gsub("/.*","", $7); print $7}'
-      )
-    - pylint --exit-zero -f pylint_gitlab.GitlabCodeClimateReporter src/ > codequality.json
-    - anybadge 
-        --overwrite
-        --label ${CI_JOB_NAME##*:}
-        --value=${SCORE}
-        --file ${CI_JOB_NAME##*:}.svg
-        4=red 6=orange 8=yellow 10=green
-    - pylint --exit-zero -f colorized src/
-
-  artifacts:
-    paths: ['*.svg']
-    reports:
-      codequality: codequality.json
-
-build:
-  stage: build
-  script:
-    - python setup.py sdist bdist_wheel
-
-  artifacts:
-    paths: ['dist/*']
-
-release:
-  stage: release
-  image: registry.gitlab.com/gitlab-org/release-cli:latest
-  rules:
-    - if: $CI_COMMIT_TAG
-  script: ['echo running release']
-
-  release:
-    name: 'Release $CI_COMMIT_TAG'
-    description: ./CHANGELOG.md
-    tag_name: '$CI_COMMIT_TAG'
-    ref: '$CI_COMMIT_TAG'
-
-publish:
-  stage: publish
-  rules:
-    - if: $CI_COMMIT_TAG
-
-  script:
-    - twine upload dist/*
