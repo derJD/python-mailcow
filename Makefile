@@ -1,31 +1,15 @@
-GLRBIN ?= gitlab-runner
-GLRFLAGS ?= --docker-volumes /var/run/docker.sock \
-	--docker-volumes /tmp/gl-cache \
-	--docker-cache-dir /tmp/gl-cache \
-	--cache-dir /tmp/gl-cache \
-	--docker-privileged=true \
-	--env DOCKER_DRIVER=zfs \
-	--env CI_REGISTRY=$(CI_REGISTRY)
-
 .PHONY: all help
 
 all: help
 
 package:
-	python setup.py sdist
+	pyproject-build --sdist --wheel
 install:
-	pip install dist/python-mailcow-9999.999.99.dev9.tar.gz
+	pip install .
 list:
 	pip show python-mailcow
-
-glr-build: glr-check
-	${GLRBIN} exec docker build ${GLRFLAGS}
-glr-pylint: glr-check
-	${GLRBIN} exec docker test:pylint ${GLRFLAGS}
-glr-check:
-ifeq ($(CI_REGISTRY),)
-	$(error CI_REGISTRY env variable is not set)
-endif
+lint:
+	pylint --exit-zero -f parseable src/
 
 help:
 	@echo -e "Available targets:\n"
