@@ -9,7 +9,7 @@ import sys
 from mailcow.globals import CONF
 
 
-def menu(sections={}):
+def menu(sections=None):
     parser = argparse.ArgumentParser(
         description='Interact with mailcow\'s API. ')
     parser.add_argument('--create-example-config', action='store_true',
@@ -30,14 +30,15 @@ def menu(sections={}):
                         default=False, help='Enable debugging')
     section_subparser = parser.add_subparsers(dest='section')
 
-    for section, modifiers in sections.items():
-        section_parser = section_subparser.add_parser(section)
-        modify_subparser = section_parser.add_subparsers(dest='modifier')
+    if isinstance(sections, dict):
+        for section, modifiers in sections.items():
+            section_parser = section_subparser.add_parser(section)
+            modify_subparser = section_parser.add_subparsers(dest='modifier')
 
-        for modifier in modifiers:
-            modify_parser = modify_subparser.add_parser(modifier)
-            arguments = modifiers[modifier]
-            build_argument(modify_parser, arguments)
+            for modifier in modifiers:
+                modify_parser = modify_subparser.add_parser(modifier)
+                arguments = modifiers[modifier]
+                build_argument(modify_parser, arguments)
 
     args = parser.parse_args()
 
