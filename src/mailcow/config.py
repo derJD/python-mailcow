@@ -43,21 +43,21 @@ def load_cfg(file):
 def create_cfg(file):
     if path.exists(file):
         raise IOError(f'File {file} already exists!')
-    else:
-        makedirs(path.dirname(file), exist_ok=True)
 
-        config = set_config_parser()
-        config.read_dict({
-            'defaults': {
-                'server': 'mail.example.com',
-                'ssl_verify': True,
-                'timeout': 15
-            },
-            'mail.example.com': {
-                'url': 'https://mail.example.com',
-                'token': '123456-abcde-123456-abcde-123456'
-            }
-        })
+    makedirs(path.dirname(file), exist_ok=True)
 
-        with open(file, 'w') as configfile:
-            config.write(configfile)
+    config = set_config_parser()
+    config.read_dict({
+        'defaults': {
+            'server': 'mail.example.com',
+            'ssl_verify': True,
+            'timeout': 15
+        },
+        'mail.example.com': {
+            'url': 'https://mail.example.com',
+            'token': '123456-abcde-123456-abcde-123456'
+        }
+    })
+
+    with open(file, 'w') as configfile:
+        config.write(configfile)
