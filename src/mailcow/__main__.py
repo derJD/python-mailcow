@@ -3,4 +3,5 @@
 import mailcow.cli
 
 
-__name__ == "__main__" and mailcow.cli.main()
+if __name__ == "__main__":
+    mailcow.cli.main()
