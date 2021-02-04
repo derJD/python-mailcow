@@ -232,3 +232,35 @@ def getOpenApiProperties(schema):
         del properties['attr']
 
     return properties
+
+
+def validate_response(func):
+    '''Decorator validating session responses'''
+    def validate(*args, **kwargs):
+        response = func(*args, **kwargs)
+        for msg in [f'Request Status Code: {response.status_code}',
+                    f'Request Headers: {response.headers}']:
+            debug_msg(msg)
+
+        color = '\x1b[0m'
+        if response.status_code < 400:
+            color = '\x1b[6;30;42m'  # green
+        if response.status_code >= 400:
+            color = '\x1b[6;30;43m'  # yellow
+        if response.status_code >= 500:
+            color = '\x1b[6;30;41m'  # red
+        end = '\x1b[0m'
+
+        debug_msg(f'API response {response.url}:'
+                  f'{color} {response.status_code} {end}')
+
+        if 'json' in response.headers['Content-Type'] and \
+                len(response.content) > 0:
+            body = response.json()
+        else:
+            body = response.content
+
+        debug_msg(f'Request Content: {body}')
+        return body
+
+    return validate
