@@ -5,7 +5,7 @@
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 import argparse
-from sys import argv
+import sys
 from mailcow.globals import CONF
 
 
@@ -41,9 +41,9 @@ def menu(sections={}):
 
     args = parser.parse_args()
 
-    if len(argv) < 2:
+    if len(sys.argv) < 2:
         parser.print_help()
-        exit(1)
+        sys.exit(1)
 
     return args
 

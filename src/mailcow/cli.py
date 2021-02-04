@@ -22,7 +22,7 @@ def main():
     # before building argparse menu
     if '--create-example-config' in sys.argv:
         create_cfg(CONF)
-        exit(0)
+        sys.exit(0)
 
     moo = MailCow()
     # add `--fields` argument before creating menu
