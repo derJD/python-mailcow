@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import yaml
 import json
 import requests
 from prettytable import PrettyTable
@@ -11,6 +10,7 @@ from mailcow.utils import (
     describeOpenApiPath, filterOpenApiPath,
     getOpenApiParameters,
     getOpenApiProperties)
+import yaml
 
 
 class MailCow:

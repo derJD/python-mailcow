@@ -4,9 +4,9 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
+import argparse
 from sys import argv
 from mailcow.globals import CONF
-import argparse
 
 
 def menu(sections={}):
