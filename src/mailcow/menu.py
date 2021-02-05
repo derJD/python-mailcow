@@ -51,7 +51,7 @@ def menu(sections=None):
 
 def build_argument(data, arguments):
     for argument, values in arguments.items():
-        help = values['description'] if 'description' in values else None
+        data_help = values['description'] if 'description' in values else None
         choices = values['enum'] if 'enum' in values else None
         action = 'store'
         options = [f'--{argument}']
@@ -75,7 +75,7 @@ def build_argument(data, arguments):
         if values['type'] in ['bool', 'boolean']:
             action = 'store_true'
         if values['type'] in ['object', 'array']:
-            help = f'{help}. Can be used multiple times.'
+            data_help = f'{data_help}. Can be used multiple times.'
         # would rather use argparse.BooleanOptionalAction action
         # but it's a bit too new
         if values['type'] == 'boolean':
@@ -83,13 +83,13 @@ def build_argument(data, arguments):
 
         if choices:
             data.add_argument(
-                *options, action=action, help=help, choices=choices)
+                *options, action=action, help=data_help, choices=choices)
         elif values['type'] == 'number':
             data.add_argument(
-                *options, action=action, help=help, type=int)
+                *options, action=action, help=data_help, type=int)
         else:
             data.add_argument(
-                *options, action=action, help=help, default=None)
+                *options, action=action, help=data_help, default=None)
 
     return data
 

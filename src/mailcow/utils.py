@@ -176,19 +176,19 @@ def describeOpenApiPath(path):
     path = list(filter(None, path.split('/')[3:]))
     modifier = path[0]
     section = path[1]
-    all = False
+    parm_all = False
     component = 'no_log' if path[-1] == 'no_log' else None
     parameter = path[-1] if '{' in path[-1] else None
 
     if len(path) > 2:
-        all = (path[2] == 'all')
+        parm_all = (path[2] == 'all')
         if '{' not in path[2] and path[2] != 'all':
             component = path[2]
 
     return dict(
         modifier=modifier,
         section=section,
-        all=all,
+        all=parm_all,
         component=component,
         parameter=parameter)
 
