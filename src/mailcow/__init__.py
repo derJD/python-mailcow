@@ -123,7 +123,7 @@ class MailCow:
         url = kwargs.get('url', self.url)
         token = kwargs.get('token', self.token)
         method = kwargs.get('method')
-        json = kwargs.get('json', self.json)
+        data = kwargs.get('json', self.json)
         headers = {'X-API-Key': token}
 
         debug_msg(f'Request URL: {url}')
@@ -133,7 +133,7 @@ class MailCow:
             headers=headers,
             method=method,
             url=url,
-            json=json)
+            json=data)
 
         return request
 
@@ -169,7 +169,7 @@ class MailCow:
 
         return self._request(url=url, method='get')
 
-    def addRequest(self, section, json=None):
+    def addRequest(self, section, data=None):
         '''
         Send PUT request to MailCow instance.
 
@@ -187,7 +187,7 @@ class MailCow:
         '''
         url = f'{self.request_url}/add/{section}'
 
-        return self._request(url=url, method='post', json=json)
+        return self._request(url=url, method='post', json=data)
 
     def editRequest(self, section=None, items=None, attr=None, action=None):
         '''
@@ -212,16 +212,16 @@ class MailCow:
         ```
         '''
         url = f'{self.request_url}/edit/{section}'
-        json = dict(items=items, attr=attr, action=action)
+        data = dict(items=items, attr=attr, action=action)
 
         if not items:
-            del json['items']
+            del data['items']
         if not attr:
-            del json['attr']
+            del data['attr']
         if not action:
-            del json['action']
+            del data['action']
 
-        return self._request(url=url, method='post', json=json)
+        return self._request(url=url, method='post', json=data)
 
     def as_json(self):
         '''Convert self.data into JSON'''
