@@ -165,7 +165,6 @@ class MailCow:
         ```
         '''
         url = f'{self.request_url}/get/{section}'
-        self.method = 'get'
 
         return self._request(url=url, method='get')
 
