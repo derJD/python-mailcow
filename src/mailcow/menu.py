@@ -4,12 +4,15 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
+'''This module is for building argumentparser needed by CLI'''
+
 import argparse
 import sys
 from mailcow.globals import CONF
 
 
 def menu(sections=None):
+    '''Function building CLI menu'''
     parser = argparse.ArgumentParser(
         description='Interact with mailcow\'s API. ')
     parser.add_argument('--create-example-config', action='store_true',
@@ -50,6 +53,7 @@ def menu(sections=None):
 
 
 def build_argument(data, arguments):
+    '''Parse endpoints and build arguments accordingly'''
     for argument, values in arguments.items():
         data_help = values['description'] if 'description' in values else None
         choices = values['enum'] if 'enum' in values else None
@@ -95,6 +99,7 @@ def build_argument(data, arguments):
 
 
 def main():
+    '''Main'''
     m = menu()
     print(m)
 

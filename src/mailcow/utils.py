@@ -4,6 +4,8 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
+'''Utils for mailcow'''
+
 import re
 import sys
 import logging
@@ -173,6 +175,7 @@ def filterOpenApiPath(schema):
 
 
 def describeOpenApiPath(path):
+    '''Parse path from openapi and return results as dict'''
     path = list(filter(None, path.split('/')[3:]))
     modifier = path[0]
     section = path[1]

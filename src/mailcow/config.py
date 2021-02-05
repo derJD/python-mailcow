@@ -4,15 +4,19 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
+'''This module manages configuration for mailcow interaction'''
+
 from os import path, makedirs
 from configparser import ConfigParser
 
 
 def set_config_parser():
+    '''Set defaults for ConfigParser'''
     return ConfigParser(default_section='defaults')
 
 
 def expand_path(fnc):
+    '''Decorator expanding paths'''
     def expand(*args):
         return fnc(path.expanduser(args[0]))
 
@@ -21,6 +25,7 @@ def expand_path(fnc):
 
 @expand_path
 def find_cfg(file):
+    '''Find configuration file'''
     exists = path.exists(file)
 
     if not exists:
@@ -33,6 +38,7 @@ def find_cfg(file):
 
 @expand_path
 def load_cfg(file):
+    '''Load configuration file'''
     config = set_config_parser()
     config.read(file)
 
@@ -41,6 +47,7 @@ def load_cfg(file):
 
 @expand_path
 def create_cfg(file):
+    '''Create configuration file'''
     if path.exists(file):
         raise IOError(f'File {file} already exists!')
 

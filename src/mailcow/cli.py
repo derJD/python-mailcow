@@ -4,6 +4,8 @@
 # GNU General Public License v3.0+
 # (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
+'''This module represends CLI to interact with MailCow'''
+
 import sys
 from mailcow import MailCow
 from mailcow.globals import CONF, FIELDS
@@ -18,6 +20,7 @@ from mailcow.utils import (
 
 
 def main():
+    '''CLI manipulating mailcow instance'''
     # Allow creation of example configuration file
     # before building argparse menu
     if '--create-example-config' in sys.argv:

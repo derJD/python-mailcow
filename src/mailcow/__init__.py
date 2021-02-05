@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+'''Class for mailcow interaction'''
+
 import json
 import requests
 from prettytable import PrettyTable
