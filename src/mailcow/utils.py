@@ -234,6 +234,13 @@ def getOpenApiProperties(schema):
         properties.update(attr['properties'])
         del properties['attr']
 
+    # https://github.com/mailcow/mailcow-dockerized/blob/master/data/web/api/openapi.yaml#L1024
+    # https://github.com/mailcow/mailcow-dockerized/blob/master/data/web/api/openapi.yaml#L3055
+    # There is a typo in the mailbox update,add properties
+    if 'pasword' in properties.keys():
+        properties.update({'password': properties['pasword']})
+        del properties['pasword']
+
     return properties
 
 
