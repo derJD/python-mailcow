@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.4](https://gitlab.der-jd.de/python/mailcow/compare/1.0.3...1.0.4) (2021-02-18)
+
+
+### Bug Fixes
+
+* **utils:** Add workarround for property typo ([550173d](https://gitlab.der-jd.de/python/mailcow/commit/550173d66d61d496d495aba37f040bb61fc77650))
+
 ### [1.0.3](https://gitlab.der-jd.de/python/mailcow/compare/1.0.2...1.0.3) (2021-02-05)
 
 
