@@ -21,9 +21,11 @@ BTW: The look and feel of the cli and configuration is inspired by the [python-g
 
 ### Local Build
 
-* `git checkout main`
-* `python setup.py sdist`
-* `pip install dist/python-mailcow-9999.999.99.dev9.tar.gz`
+```sh
+git clone https://github.com/derJD/python-mailcow.git
+cd python-mailcow
+pip install .
+```
 
 ## Usage
 
@@ -97,141 +99,12 @@ optional arguments:
   --debug, -d           Enable debugging
 ```
 
-**`mailcow alias add --help`**:
+## Documentation
 
-```help
-usage: mailcow alias add [-h] [--active] [--address ADDRESS] [--goto GOTO] [--goto_ham] [--goto_null] [--goto_spam] [--sogo_visible]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --active, --no-active
-                        is alias active or not
-  --address ADDRESS     alias address, for catchall use "@domain.tld"
-  --goto GOTO           destination address, comma separated
-  --goto_ham, --no-goto_ham
-                        learn as ham
-  --goto_null, --no-goto_null
-                        silently ignore
-  --goto_spam, --no-goto_spam
-                        learn as spam
-  --sogo_visible, --no-sogo_visible
-                        toggle visibility in SoGo
-```
-
-Editing alias' active status and visibility should look like this:
-
-```bash
-mailcow alias edit --items 78 --active --sogo_visible
-+---------+----------------------------------------------------------------------------------------+-------------------------------------------+
-|   type  |                                          log                                           |                    msg                    |
-+---------+----------------------------------------------------------------------------------------+-------------------------------------------+
-| success | ['mailbox', 'edit', 'alias', {'id': ['78'], 'active': '1', 'sogo_visible': '1'}, None] | ['alias_modified', 'example@example.com'] |
-+---------+----------------------------------------------------------------------------------------+-------------------------------------------+
-```
-
-### python
-
-#### **Class `MailCow()`**
-
-Connect to MailCow instance defined in config file and
-interact via API Requests
-
-`MailCow()` takes the same arguments as listed in [Config](#config) and one additional optional argument:
-
-| Argument | Type | Description |
-| -------- | ---- | ----------- |
-| `conf` | String | Path to config file |
-
-Every argument is optional and accessible as attribute.
-
-| Attributes | Type | Description |
-| ---------- | ---- | ----------- |
-| `data` | dict/None | Store API responses here and display response via methods `as_json`, `as_yaml`, `as_table` |
-| `json` | dict/None | Store payload for API requests here |
-| `request_url` | string | `{url}/api/v1` |
-| `session` | object | Session used for requests |
-| `schema` | dict | Schema retrieved from MailCows OpenApi |
-| `endpoints` | dict | All endpoints from filtered from `schema` |
-
-#### **Method `endpoint(endpoint)`**
-
-Returns specific endpoint as `dict` or `None`
-
-| Argument | Type | Description |
-| -------- | ---- | ----------- |
-| endpoint | string | Name of the endpoint. ie `"alias"` or `"mailbox"` |
-
-#### **Method `deleteRequest(section, items)`**
-
-Send delete request
-
-| Argument | Type | Description |
-| -------- | ---- | ----------- |
-| section | string | section aka last part of the url. ie `alias` |
-| items | list | List of items to delete. ie: `['5']` |
-
-#### **Method `getRequest(section)`**
-
-Send get request
-
-| Argument | Type | Description |
-| -------- | ---- | ----------- |
-| section | string | section aka last part of the url. ie `alias/all` |
-
-#### **Method `addRequest(section, json)`**
-
-Send add request
-
-| Argument | Type | Description |
-| -------- | ---- | ----------- |
-| section | string | section aka last part of the url. ie `alias` |
-| json | dict | attributes send as payload. ie `{'active': '1', 'address': 'example@example.com'}` |
-
-#### **Method `editRequest(section, items, attr, action)`**
-
-Send edit request
-
-| Argument | Type | Description |
-| -------- | ---- | ----------- |
-| section | string | section aka last part of the url. ie `alias` |
-| items | list | items send as payload .ie `['5']` or `['domain.tld']` |
-| attr | dict | attributes send as payload. ie `{'active': '1', 'address': 'example@example.com'}` |
-| action | string | action send as payload. only needed by `mailq` section .ie `flush` |
-
-#### **Method `as_json()`**
-
-Return `data` as json
-
-#### **Method `as_yaml()`**
-
-Return `data` as yaml
-
-#### **Method `as_table(vertical)`**
-
-Return `data` as table. `vertical` expects boolean
-
-| Argument | Type | Description |
-| -------- | ---- | ----------- |
-| vertical | bool | Enable/Disable vertical print of `data`. Defaults to `False` |
-
-#### **Example**
-
-```python
-moo = MailCow()
-logs = moo.getRequest(section='logs/api/5')
-moo.data = logs
-print(moo.as_table())
-# returns:
-# +------------+----------------------------------+--------+-----------+------+
-# |    time    |               uri                | method |   remote  | data |
-# +------------+----------------------------------+--------+-----------+------+
-# | 1611102437 |      /api/v1/get/logs/api/5      |  GET   | xx.x.xx.x |      |
-# | 1611096182 | /api/v1/get/rl-mbox/xx@examp.com |  GET   | xx.x.xx.x |      |
-# | 1611087846 | /api/v1/get/rl-mbox/xx@examp.com |  GET   | xx.x.xx.x |      |
-# | 1611087808 |    /api/v1/get/logs/dovecot/5    |  GET   | xx.x.xx.x |      |
-# | 1611087797 | /api/v1/get/syncjobs/all/no_log  |  GET   | xx.x.xx.x |      |
-# +------------+----------------------------------+--------+-----------+------+
-```
+* [General documentation](https://der-jd.de/mailcow/intro/)
+* [CLI usage](https://der-jd.de/mailcow/cli/)
+* [API usage](https://der-jd.de/mailcow/python/)
+* [Reference](https://der-jd.de/mailcow/reference/mailcow/)
 
 ## License
 
