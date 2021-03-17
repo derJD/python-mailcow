@@ -1,6 +1,7 @@
 # python-mailcow
 
 [![PyPI version](https://badge.fury.io/py/python-mailcow.svg)](https://badge.fury.io/py/python-mailcow)
+[![PyPI downloads](https://img.shields.io/pypi/dm/python-mailcow)](https://pypi.org/project/python-mailcow/)
 [![pylint](https://gitlab.der-jd.de/python/mailcow/-/jobs/artifacts/main/raw/pylint.svg?job=lint:pylint)](#python-mailcow)
 
 `python-mailcow` allows you to interact with the [MailCow](https://mailcow.email/) API. It comes with a cli `mailcow`.
