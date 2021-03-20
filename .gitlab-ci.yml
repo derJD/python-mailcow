@@ -13,6 +13,8 @@
 #
 # 4) If triggered via tag, build will be released with twine
 #
+# 5) Sync ref and tags from gitlab to github
+#
 # Templates/Includes located and documented here:
 #   https://gitlab.der-jd.de/gitlab/ci-templates
 #
@@ -22,6 +24,7 @@ include:
   - { project: gitlab/ci-templates, file: build/python.yml }
   - { project: gitlab/ci-templates, file: release/semantic.yml }
   - { project: gitlab/ci-templates, file: release/python.yml }
+  - { project: gitlab/ci-templates, file: release/github.yml }
 
 workflow:
   rules:
