@@ -102,10 +102,10 @@ optional arguments:
 
 ## Documentation
 
-* [General documentation](https://der-jd.de/mailcow/intro/)
-* [CLI usage](https://der-jd.de/mailcow/cli/)
-* [API usage](https://der-jd.de/mailcow/python/)
-* [Reference](https://der-jd.de/mailcow/reference/mailcow/)
+* [General documentation](https://der-jd.de/python-mailcow/intro/)
+* [CLI usage](https://der-jd.de/python-mailcow/cli/)
+* [API usage](https://der-jd.de/python-mailcow/python/)
+* [Reference](https://der-jd.de/python-mailcow/reference/mailcow/)
 
 ## License
 
