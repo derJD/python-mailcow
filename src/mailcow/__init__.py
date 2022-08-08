@@ -166,7 +166,7 @@ class MailCow:
         Example:
         ```
         moo = MailCow()
-        moo.deleteRequest('alias/all')
+        moo.getRequest('alias/all')
         # {moo.server}/api/v1/alias/all
         ```
         '''
@@ -184,7 +184,7 @@ class MailCow:
         attributes = dict(
             address="example@example.com",
             goto="mailbox@example.com")
-        moo.deleteRequest('alias', attributes)
+        moo.addRequest('alias', attributes)
         # {moo.server}/api/v1/add/alias
         # JSON Body:
         #   {"address": "example@example.com", "goto": "mailbox@example.com"}
@@ -205,7 +205,7 @@ class MailCow:
             address="new_example@example.com",
             goto="mailbox@example.com")
         items = ['5']
-        moo.deleteRequest('alias', items, attributes)
+        moo.editRequest('alias', items, attributes)
         # {moo.server}/api/v1/edit/alias
         # JSON Body: {
         #   "items": ["5"],
