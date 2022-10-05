@@ -61,8 +61,8 @@ class MailCow:
         self.server = kwargs.get('server', cfg['defaults']['server'])
         self.url = kwargs.get('url', cfg[self.server]['url'])
         self.token = kwargs.get('token', cfg[self.server]['token'])
-        self.ssl_verify = kwargs.get('ssl_verify', SSL_VERIFY)
-        self.timeout = kwargs.get('timeout', SSL_TIMEOUT)
+        self.ssl_verify = kwargs.get('ssl_verify', cfg['defaults'].get('ssl_verify', cfg[self.server].get('ssl_verify', f'{SSL_VERIFY}'))).lower() not in ["false", "no", "f"]
+        self.timeout = int(kwargs.get('timeout', cfg['defaults'].get('timeout', cfg[self.server].get('timeout', f'{SSL_TIMEOUT}'))))
         self.data = None
         self.json = None
 
